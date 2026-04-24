@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hierarchy Explorer · /bfhl</title>
+    <link rel="icon" href="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'&gt;&lt;rect width='64' height='64' rx='14' fill='%237c5cff'/&gt;&lt;text x='50%25' y='54%25' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='34' font-weight='700' fill='white' dominant-baseline='middle'&gt;H&lt;/text&gt;&lt;/svg&gt;" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app">
+      <header class="hero">
+        <div class="hero-tag">POST /bfhl</div>
+        <h1>Hierarchy Explorer</h1>
+        <p class="hero-sub">
+          Send an array of <code>Parent-&gt;Child</code> edges. Get back parsed
+          trees, detected cycles, duplicates, and invalid entries.
+        </p>
+      </header>
+
+      <main class="grid">
+        <section class="card input-card">
+          <div class="card-head">
+            <h2>Input</h2>
+            <div class="presets">
+              <button type="button" class="preset" data-preset="example">
+                Load example
+              </button>
+              <button type="button" class="preset" data-preset="cycle">
+                Cycle
+              </button>
+              <button type="button" class="preset" data-preset="diamond">
+                Diamond
+              </button>
+              <button type="button" class="preset ghost" id="clearBtn">
+                Clear
+              </button>
+            </div>
+          </div>
+
+          <label class="field-label" for="dataInput">
+            One edge per line, or a JSON array
+          </label>
+          <textarea
+            id="dataInput"
+            spellcheck="false"
+            placeholder='A->B&#10;A->C&#10;B->D&#10;&#10;Or paste JSON: ["A->B","A->C","B->D"]'
+          ></textarea>
+
+          <div class="actions">
+            <button id="submitBtn" class="primary">
+              <span class="btn-label">Process</span>
+              <span class="spinner" aria-hidden="true"></span>
+            </button>
+            <span class="hint" id="parsedHint"></span>
+          </div>
+
+          <div class="error" id="errorBox" hidden></div>
+        </section>
+
+        <section class="card result-card">
+          <div class="card-head">
+            <h2>Response</h2>
+            <div class="tabs" role="tablist">
+              <button class="tab active" data-tab="visual" role="tab">
+                Visual
+              </button>
+              <button class="tab" data-tab="json" role="tab">JSON</button>
+            </div>
+          </div>
+
+          <div id="emptyState" class="empty">
+            <div class="empty-icon">↗</div>
+            <p>Run a request to see results here.</p>
+          </div>
+
+          <div id="visualPane" class="pane" hidden>
+            <div class="identity" id="identityBlock"></div>
+            <div class="summary-row" id="summaryRow"></div>
+            <div class="section-title">Hierarchies</div>
+            <div id="hierarchiesList" class="hierarchies"></div>
+            <div class="lists-row">
+              <div class="mini-card">
+                <div class="mini-title">Invalid entries</div>
+                <ul id="invalidList" class="chip-list"></ul>
+              </div>
+              <div class="mini-card">
+                <div class="mini-title">Duplicate edges</div>
+                <ul id="dupList" class="chip-list"></ul>
+              </div>
+            </div>
+          </div>
+
+          <pre id="jsonPane" class="pane json-pane" hidden></pre>
+        </section>
+      </main>
+
+      <footer class="foot">
+        Built for the SRM Full Stack Challenge ·
+        <a href="/bfhl" target="_blank" rel="noopener">/bfhl endpoint</a>
+      </footer>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
